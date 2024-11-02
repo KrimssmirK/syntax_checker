@@ -1,4 +1,6 @@
 {
+	"METHOD_ACCESS": "->",
+	"STRING_LITERAL": "\".*\"",
 	"TEMPLATE": "template",
 	"FUNCTION": "fn",
 	"OPEN_PARAN": "\\(",

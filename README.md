@@ -17,7 +17,6 @@
 - [How to Run](#how-to-run)
   - [Using Anaconda or Conda (Environment)](#using-anaconda-or-conda-environment)
   - [Using Python (Standalone)](#using-python-standalone)
-- [Running the Program](#running-the-program)
 - [Resources for Development](#resources-for-development)
 
 ---
@@ -224,22 +223,6 @@ Using a standalone python without environments such as Miniconda or Anaconda, yo
 ```bat
 pip install -r "requirements.txt"
 ```
-
-### Running the Program
-
-There's already a bat file created to run the program. Though, you could still manually run the program by just simply typing the command below in the terminal while pointed inside the project directory:
-
-```bat
-python main.py
-```
-
-The alternative is of course, run the batch file by simply typing the command below:
-
-```bat
-hvsyntax
-```
-
-The batch file also allows you to create a shortcut for the program so you can just access the program via that batch file.
 
 ### Resources for Development
 

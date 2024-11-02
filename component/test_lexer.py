@@ -4,7 +4,7 @@ from rply.token import Token
 import json5
 
 
-class TestLexer(unittest.TestCase):
+class TestLexerToken(unittest.TestCase):
  
     def setUp(self):
         SYNTAX_RULES_PATH = "../syntax_rules/syntax_rules.jsonc"
@@ -216,6 +216,88 @@ class TestLexer(unittest.TestCase):
         expected = Token("SPECIAL_CHARACTER", "$")
         for token in self.lexer.lex(_input):
             self.assertEqual(token, expected)
+    
+    def test_string_literal_token(self):
+        _input = "\"hello world\""
+        expected = Token("STRING_LITERAL", "\"hello world\"")
+        for token in self.lexer.lex(_input):
+            self.assertEqual(token, expected)
+    
+    def test_method_access_token(self):
+        _input = "->"
+        expected = Token("METHOD_ACCESS", "->")
+        for token in self.lexer.lex(_input):
+            self.assertEqual(token, expected)
+
+
+class TestLexer(unittest.TestCase):
+ 
+    def setUp(self):
+        SYNTAX_RULES_PATH = "../syntax_rules/syntax_rules.jsonc"
+        with open(SYNTAX_RULES_PATH, "r") as file:
+            syntax_rules = json5.load(file)
+        my_lexer_generator = CustomLexerGenerator(syntax_rules=syntax_rules)
+        self.lexer = my_lexer_generator.build()
+        
+    # arr<int> numbers = [9, 8, 7, 6, 5, 4, 3, 2, 1];    
+    def test_arr_numbers(self):
+        _input = "arr<int> numbers = [9, 8, 7, 6, 5, 4, 3, 2, 1];"
+        expected = [
+            Token("TYPE", "arr<int>"),
+            Token("LETTER", "n"),
+            Token("LETTER", "u"),
+            Token("LETTER", "m"),
+            Token("LETTER", "b"),
+            Token("LETTER", "e"),
+            Token("LETTER", "r"),
+            Token("LETTER", "s"),
+            Token("ASSIGNMENT", "="),
+            Token("OPEN_BRACKET", "["),
+            Token("NUMBER", "9"),
+            Token("COMMA", ","),
+            Token("NUMBER", "8"),
+            Token("COMMA", ","),
+            Token("NUMBER", "7"),
+            Token("COMMA", ","),
+            Token("NUMBER", "6"),
+            Token("COMMA", ","),
+            Token("NUMBER", "5"),
+            Token("COMMA", ","),
+            Token("NUMBER", "4"),
+            Token("COMMA", ","),
+            Token("NUMBER", "3"),
+            Token("COMMA", ","),
+            Token("NUMBER", "2"),
+            Token("COMMA", ","),
+            Token("NUMBER", "1"),
+            Token("CLOSE_BRACKET", "]"),
+            Token("SEMI_COLON", ";"),
+        ]
+        for i, token in enumerate(self.lexer.lex(_input)):
+            self.assertEqual(token, expected[i])
+    
+    # log("before:", numbers); 
+    def test_log_before(self):
+        _input = "log(\"before:\", numbers);"
+        expected = [
+            Token("LETTER", "l"),
+            Token("LETTER", "o"),
+            Token("LETTER", "g"),
+            Token("OPEN_PARAN", "("),
+            Token("STRING_LITERAL", "\"before:\""),
+            Token("COMMA", ","),
+            Token("LETTER", "n"),
+            Token("LETTER", "u"),
+            Token("LETTER", "m"),
+            Token("LETTER", "b"),
+            Token("LETTER", "e"),
+            Token("LETTER", "r"),
+            Token("LETTER", "s"),
+            Token("CLOSE_PARAN", ")"),
+            Token("SEMI_COLON", ";")
+        ]
+        for i, token in enumerate(self.lexer.lex(_input)):
+            self.assertEqual(token, expected[i])
 
 
 if __name__ == "__main__":
