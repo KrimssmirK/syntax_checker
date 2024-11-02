@@ -1,0 +1,63 @@
+# Scoping Structure #
+<program> → [<imports>] <classDefinition>;
+<imports> → {"use" <classPath> ";"};
+<classDefinition> → [<accessModifier>] ("template" | "mod") <variableName> [{<baseClass>}] [<interfaceClasses>] <classBody>;
+<classBody> → "{" ([{<functionDefinition>}] | [{<assignment>}] | [{classDefinition}]) "}"
+<baseClass> → "ext" <variableName>;
+<interfaceClasses> → "modded" <variableName> {"," <variableName>};
+<functionDefinition> → [<accessModifier>] (<scopedFunctionDefinition> | <staticFunctionDefinition>);
+<staticFunctionDefinition> → "static" <scopedFunctionDefinition>;
+<scopedFunctionDefinition> → "fn" <variableName> "(" <parameters> ")" "{" <statements> "}";
+
+# General Structure #
+<statements> → {<statement>};
+<statement> → (<declaration> | <assignment> | <operation> | <functionCall> | <loopStatment> | <conditionalStatement>) ";";
+<declaration> → [<accessModifier>] <dataType> <variableName> ["=" (<variableName> | <constant>)];
+<assignment> → <variableName> "=" (<variableName> | <constant> | <operation>);
+<operation> → (<variableName> | <objectCall> | <constant>) {<operator> (<variableName> | <constant>)};
+<functionCall> → [<objectCall>] (<variableName> "(" [<parameterValues>] ")");
+<objectCall> → ("my->" | <variableName> "->") {<objectCall>};
+<staticCall> → <variableName> "::" <variableName> [{<objectCall>}];
+<returnStatement> → "return" (<variableName> | <constant> | <functionCall>);
+<condition> → (<variableName> <comparator> (<variableName> | <constant>) | <boolean>);
+<annotations> → "::" <variableName> ["(" <parameterValues> ")"] {"," <annotations>};
+
+# Constant Structure #
+<classPath> → ((<variableName> | "*") | <letter> {<constant>{"." <classPath>}});
+<constant> → <constant> {(<string> | <number>)};
+<comparator> → ("==" | "!=" | "<" | ">" | "<=" | ">=" | "===" | "!==" | "&&" | "||" | "!");
+<operator> → ("+" | "-" | "*" | "/" | "%" | "++" | "--" | "+=" | "-=" | "*=" | "/=" | "%=");
+<specialChar> → (" " | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "]" | "^" | "_" | "`" | "{" | "}" | "|" | "~");
+<letter> → ("a...z" | "A...Z");
+<number> → ("0...9");
+<parameters> → <dataType> <variableName> ["=" (<constant>)] {"," <dataType> <variableName>};
+<parameterValues> → [<variableName> "="] (<variableName> | <constant>) {"," <parameterValues>};
+<accessModifier> → ("shared" | "self" | "internal" | "grouped");
+
+# Variable Structure #
+<dataType> → ("dbl" | "flt" | "int" | "str" | "bol" | "map<" <dataType> "," <dataType> ">" | "arr<" <dataType> ">" | <variableName>);
+<variableName> → <letter> {(<letter> | <number> | "_")};
+<wholeNumber> → <number> {<number>};
+<decimalNumber> → <wholeNumber> "." <wholeNumber>;
+<boolean> → ("true" | "false");
+<string> → '"' {<letter> | <number> | <specialChar>} '"' | "'" {<letter> | <number> | <specialChar>} "'" | "`" {<letter> | <number> | <specialChar> | "{" (<variableName> | <operation>) "}"} "`";
+<array> → "[" {<arrayEl>} "]";
+<arrayEl> → (<variableName> | <constant> | <boolean> | <map> | <array>) {"," <arrayEl>};
+<map> → "{" {<mapEl>} "}";
+<mapEl> → <variableName> ":" (<variableName> | <constant> | <boolean> | <map> | <array>) {"," <mapEl>};
+
+# Conditional Structure #
+<conditionalStatement> → (<checkClause> | <checkOtherwiseClause>);
+<checkClause> → "check (" <condition> ")" "{" <statements> "}";
+<checkOtherwiseClause> → "otherwise" <checkClause> {<otherwiseClause>};
+<otherwiseClause> → "otherwise {" <statements> "}";
+
+# Loop Structure #
+<loopStatment> → (<fromLoop> | <fromEachLoop> | <whileLoop>);
+<fromLoop> → "from" <wholeNumber> "to" <wholeNumber> "as" <variableName> ["skip (" (<condition> | <wholeNumber>) ")"] "{" <statements> "}";
+<fromEachLoop> → "from" <variableName> ["," <variableName>] "in" <variableName> "{" <statements> "}";
+<whileLoop> → "loop (" <condition> ")" "{" <statements> "}";
+
+# Comment Structure #
+<singleLineComment> → "#" <string>;
+<multiLineComment> → "#--" <string> "--#";

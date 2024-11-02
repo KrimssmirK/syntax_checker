@@ -1,0 +1,92 @@
+{
+	// COMMENTS
+	"Comment-multiLineCommentStart": "#--",
+	"Comment-multiLineCommentContent": "(?<=#--).*(?=--#)",
+	"Comment-multiLineCommentEnd": "--#",
+	"Comment-singleLineComment": "#",
+
+	// KEYWORDS
+	// Conditional //
+	"Conditional-if": "check",
+	"Conditional-else": "otherwise",
+
+	// Loop //
+	"Loop-for": "from",
+	"Loop-while": "loop",
+
+	// Scoping //
+	"Keyword-class": "template",
+	"Keyword-interface": "mod",
+	"Keyword-extends": "ext",
+	"Keyword-implements": "modded",
+	"Keyword-function": "fn",
+	"Keyword-return": "give",
+	"Keyword-break": "halt",
+	"Keyword-continue": "next",
+	"Keyword-this": "my(->)?(?!\\w)",
+	"Keyword-super": "parent(->)?(?!\\w)",
+
+	// Data Types //
+	"DataType-double": "dbl",
+	"DataType-float": "flt",
+	"DataType-int": "int",
+	"DataType-string": "str",
+	"DataType-boolean": "bol",
+	"DataType-void": "nil",
+	"DataType-null": "null",
+	"DataType-identifier": "[A-z\\$_]([A-z0-9_])*",
+
+	// Access Modifiers //
+	"AccessModifier-public": "shared",
+	"AccessModifier-private": "self",
+	"AccessModifier-protected": "internal",
+	"AccessModifier-default": "grouped",
+	"AccessModifier-static": "static",
+
+	// SPECIAL CHARACTERS
+	"SpecialChar-semicolon": ";",
+	"SpecialChar-colon": ":",
+	"SpecialChar-comma": ",",
+	"SpecialChar-openParenthesis": "\\(",
+	"SpecialChar-closeParenthesis": "\\)",
+	"SpecialChar-openCurlyBracket": "\\{",
+	"SpecialChar-closeCurlyBracket": "\\}",
+	"SpecialChar-openSquareBracket": "\\[",
+	"SpecialChar-closeSquareBracket": "\\]",
+
+	// OPERATORS
+	// Notation //
+	"Notation-arrow": "->",
+	"Notation-doubleArrow": "=>",
+
+	// Logical //
+	"Logical-strictEquality": "===",
+	"Logical-strictInequality": "!==",
+	"Logical-equality": "==",
+	"Logical-inequality": "!=",
+
+	// Assignment //
+	"Assignment-assignment": "=",
+	"Assignment-additionAssignment": "\\+=",
+	"Assignment-subtractionAssignment": "-=",
+	"Assignment-multiplicationAssignment": "\\*=",
+	"Assignment-divisionAssignment": "/=",
+	"Assignment-moduloAssignment": "%=",
+	"Assignment-exponentiationAssignment": "^=",
+
+	// Arithmetic //
+	"Arithmetic-increment": "\\+\\+",
+	"Arithmetic-decrement": "--",
+	"Arithmetic-addition": "\\+",
+	"Arithmetic-subtraction": "-",
+	"Arithmetic-multiplication": "\\*",
+	"Arithmetic-division": "/",
+	"Arithmetic-modulo": "%",
+	"Arithmetic-exponentiation": "^",
+
+	// DATA TYPE VALUES
+	"Value-boolean": "true|false",
+	"Value-string": "(\\\"|'|`).*(\\\"|'|`)",
+	"Value-decimalNumber": "[0-9]+\\.[0-9]+",
+	"Value-wholeNumber": "[0-9]+"
+}
