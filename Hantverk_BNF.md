@@ -9,7 +9,7 @@
 - **<Program>**: A collection of one or more function definitions. The asterisk (`*`) indicates that there can be zero or more functions.
 
 ```bnf
-<Function> ::= "fn" <Identifier> "(" <ParameterList> ")" "{" <Comment>* <FunctionBody> "}"
+<Function> ::= "fn" <Identifier> "(" <ParameterList> ")" "{" <Comment>* <FunctionBody> "}" | "fn" <Identifier> "("  ")" "{" <Comment>* <FunctionBody> "}"
 ```
 - **<Function>**: Defines the structure of a function, which includes:
   - `fn`: The keyword indicating the start of a function definition.
@@ -18,12 +18,11 @@
   - `{ <Comment>* <FunctionBody> }`: The body of the function, which can contain zero or more comments followed by the function's statements.
 
 ```bnf
-<ParameterList> ::= <Parameter> | <Parameter> "," <ParameterList> | "void"
+<ParameterList> ::= <Parameter> | <Parameter> "," <ParameterList>
 ```
 - **<ParameterList>**: Defines the parameters of a function. It can consist of:
   - A single parameter.
   - A parameter followed by a comma and another parameter list.
-  - The keyword `void`, indicating no parameters.
 
 ```bnf
 <Parameter> ::= <Type> <Identifier>
@@ -96,9 +95,9 @@
   - `{ <Comment>* <Statement>* }`: The body of the condition, allowing for comments and statements.
 
 ```bnf
-<ReturnStatement> ::= "finish;"
+<ReturnStatement> ::= "finish" ";"
 ```
-- **<ReturnStatement>**: Indicates the end of a function, using the keyword `finish;`.
+- **<ReturnStatement>**: Indicates the end of a function, using the keyword `finish`.
 
 ```bnf
 <ArgumentList> ::= <Expression> | <Expression> "," <ArgumentList> | ""

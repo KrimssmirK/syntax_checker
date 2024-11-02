@@ -10,7 +10,7 @@ class CustomLexerGenerator():
     
 	def __init__(
      self, 
-     syntax_rules=None, 
+     syntax_rules={}, 
      includeLexerPrefix=True, 
      verbose=False
      ):
