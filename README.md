@@ -3,6 +3,12 @@
  A final project for the subject Programming Language, that checks the syntax of
  the Hantverk Language developed back during midterms
 
+ **To check the code using Syntax Checker**
+
+ 1. Add Hantverk files to the `codes/`
+ 2. Run the `main.py` to check the syntax of added files
+    - This `main.py` checks all the files in `codes/` and run the **Syntax Checker** if they are valid syntax
+
 ---
 
 ## Table of Contents

@@ -18,7 +18,7 @@ class MyLexer():
 		self.lexer.add("BOOLEAN", r"true|false")
 		self.lexer.add("ARROW", r"->")
 		self.lexer.add("STRING", r"\".*\"")
-		self.lexer.add("TYPE", r"int|bol|arr<int>")
+		self.lexer.add("TYPE", r"int|bol|dbl|flt|str|arr<int>")
 		self.lexer.add("COMMENT", r"#.*;")
 		self.lexer.add("IDENTIFIER", r"[a-zA-Z0-9_][a-zA-Z0-9_]*")
 		self.lexer.add("OPERATOR", r">|<|={2}|!=|\+|-{1}|\*|/")

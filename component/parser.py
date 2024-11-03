@@ -1,6 +1,5 @@
 from rply import ParserGenerator
-
-# from lexer import MyLexer
+from rply.token import Token
 
 
 class MyParser:
@@ -17,19 +16,21 @@ class MyParser:
         
         # Register productions
         self.register_productions()
+        
+        # build the parser
+        self.parser = self.pg.build()
 
     def register_productions(self):
-        # <Program> ::= <Class>
+        """This is where the BNF is defined well"""
+        
         @self.pg.production('program : class')
         def program(p):
             return {'type': 'program', 'template': p[0]}
         
-        # <Class> ::= "template" <Identifier> "{" <ClassBody> "}"
         @self.pg.production('class : TEMPLATE IDENTIFIER LCBRACKET comment_list class_body RCBRACKET')
         def class_definition(p):
             return {'type': 'class', 'template': p}
         
-        # <ClassBody> ::= <Function> <ClassBody> | ε
         @self.pg.production('class_body : function class_body')
         def class_body_functions(p):
             return {'type': 'class_body', 'template': p}
@@ -218,25 +219,14 @@ class MyParser:
         def no_argument_list(p):
             return {'type': 'no_argument_list', 'template': p}
         
-        # @self.pg.production('function_body :')
-        # def no_function_body(p):
-        #     return {'type': 'no_function_body', 'template': p}
-        
+        # Handling Errors
         @self.pg.error
         def error_handler(token):
+            if Token('IDENTIFIER', 'arr') == token:
+                raise ValueError(f"you have a problem with arr!!\nTry to check either indexing or declaring an array")
+            if Token('IDENTIFIER', 'fun') == token:
+                raise ValueError(f"you have a problem with declaring a function!!\nUse the keyword \"fn\" when declaring a function")
             raise ValueError("Ran into a %s where it wasn't expected" % token)
 
     def parse(self, tokens):
-        parser = self.pg.build()
-        return parser.parse(tokens)
-
-
-
-# code_snippet_file = open("code_snippet_sample/sample1.hv")
-# code_snippet = code_snippet_file.read()
-# print(code_snippet)
-# tokens = MyLexer().tokenize(code_snippet)
-# # for token in tokens:
-# #     print(token)
-# result = MyParser().parse(tokens)
-# print(result)
+        return self.parser.parse(tokens)

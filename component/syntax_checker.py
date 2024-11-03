@@ -7,7 +7,7 @@ class SyntaxChecker():
 		self.lexer = lexer
 		self.parser = parser
 
-	def run(self):
+	def run_prompt(self):
 	
 		exitCommands = ["exit", "quit", "stop", "end"]
 
@@ -25,3 +25,20 @@ class SyntaxChecker():
 				print("\n======= ERROR =======")
 				print(e)
 				print("=====================\n")
+    
+	def check(self, code):
+		"""_summary_
+
+		Args:
+			code (str): Hantverk Code Snippets e.g. template Player {}
+		"""
+			
+		try:
+			tokens = self.lexer.tokenize(code)
+			self.parser.parse(tokens)
+			print("\033[1;32;40mSYNTAX VALID!")
+		except Exception as e:
+			print("\n\033[1;31;40m======= ERROR =======")
+			print(e)
+			print("=====================\n")
+        
