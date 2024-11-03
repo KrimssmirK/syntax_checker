@@ -1,17 +1,11 @@
-import json5
-from component.lexer import MyLexer
-from component.parser import MyParser
-
-
-# consists of Lexer and Parser
 class SyntaxChecker():
     
-	def __init__(self, syntax_rules_path="", includeLexerPrefix=True, verbose=False):
+	def __init__(self, lexer=None, parser=None):
 		"""
 		Initialize the lexer and parser
 		"""
-		self.lexer = MyLexer()
-		self.parser = MyParser()
+		self.lexer = lexer
+		self.parser = parser
 
 	def run(self):
 	
@@ -31,14 +25,3 @@ class SyntaxChecker():
 				print("\n======= ERROR =======")
 				print(e)
 				print("=====================\n")
-
-
-
-def main():
-    SYNTAX_RULES_PATH = "../syntax_rules/syntax_rules.jsonc"
-    syntax_checker = SyntaxChecker(syntax_rules_path=SYNTAX_RULES_PATH, verbose=True)
-    syntax_checker.run()
-
-
-if __name__ == "__main__":
-    main()

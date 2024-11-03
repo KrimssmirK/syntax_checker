@@ -146,7 +146,7 @@ template SampleCodes {
 ```
 template CodeChallenge {
 
-    # this is the start point of the program when this template invoked
+    # this is the start point of the program when this template invoked;
     fn main() {
         arr<int> numbers = [9, 8, 7, 6, 5, 4, 3, 2, 1];
         log("before:", numbers);
@@ -156,18 +156,18 @@ template CodeChallenge {
 
     fn bubbleSort(arr<int> numbers) {
         # get the length of the array;
-        int n = numbers->size;
+        int n = numbers->size();
 
-        # traverse through all array elements
+        # traverse through all array elements;
         from 0 to n as i {
             bol swapped = false;
 
-            # last i elements are already in place
+            # last i elements are already in place;
             from 0 to n-i-1 as j {
 
-                # traverse the array from 0 to n-i-1
-                # swap if the element found is greater
-                # than the next element
+                # traverse the array from 0 to n-i-1;
+                # swap if the element found is greater;
+                # than the next element;
                 check (numbers[j] > arr[j+1]) {
                     swap(numbers, j, j+1);
                     swapped = true;

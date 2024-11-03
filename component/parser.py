@@ -1,6 +1,6 @@
 from rply import ParserGenerator
 
-from lexer import MyLexer
+# from lexer import MyLexer
 
 
 class MyParser:
@@ -25,7 +25,7 @@ class MyParser:
             return {'type': 'program', 'template': p[0]}
         
         # <Class> ::= "template" <Identifier> "{" <ClassBody> "}"
-        @self.pg.production('class : TEMPLATE IDENTIFIER LCBRACKET class_body RCBRACKET')
+        @self.pg.production('class : TEMPLATE IDENTIFIER LCBRACKET comment_list class_body RCBRACKET')
         def class_definition(p):
             return {'type': 'class', 'template': p}
         
@@ -74,6 +74,10 @@ class MyParser:
         def statement_with_variable_declaration(p):
             return {'type': 'statement_with_variable_declaration', 'template': p}
         
+        @self.pg.production('statement : variable_assignment')
+        def statement_with_variable_assignment(p):
+            return {'type': 'statement_with_variable_assignment', 'template': p}
+        
         @self.pg.production('statement : function_call')
         def statement_with_function_call(p):
             return {'type': 'statement_with_function_call', 'template': p}
@@ -118,6 +122,10 @@ class MyParser:
         def multiple_comment_list(p):
             return {'type': 'multiple_comment_list', 'template': p}
         
+        @self.pg.production('comment_list :')
+        def no_comment_list(p):
+            return {'type': 'no_comment_list', 'template': p}
+        
         @self.pg.production('loop_statement : FROM expression TO expression AS IDENTIFIER LCBRACKET statement_list RCBRACKET')
         def loop_statement(p):
             return {'type': 'loop_statement', 'template': p}
@@ -130,6 +138,14 @@ class MyParser:
         def variable_declaration(p):
             return {'type': 'variable_declaration', 'template': p}
         
+        @self.pg.production('variable_assignment : IDENTIFIER ASSIGN expression SEMICOLON')
+        def variable_assignment(p):
+            return {'type': 'variable_assignment', 'template': p}
+        
+        @self.pg.production('variable_assignment : array_access ASSIGN expression SEMICOLON')
+        def variable_assignment_array(p):
+            return {'type': 'variable_assignment', 'template': p}
+        
         @self.pg.production('expression : IDENTIFIER')
         def expression_identifier(p):
             return {'type': 'expression_identifier', 'template': p}
@@ -137,6 +153,10 @@ class MyParser:
         @self.pg.production('expression : literal')
         def expression_literal(p):
             return {'type': 'expression_literal', 'template': p}
+        
+        @self.pg.production('expression : array_access')
+        def expression_array_access(p):
+            return {'type': 'expression_array_access', 'template': p}
         
         @self.pg.production('expression : expression OPERATOR expression')
         def expression_with_operator(p):
@@ -165,6 +185,10 @@ class MyParser:
         @self.pg.production('array_literal : LBRACKET element_list RBRACKET')
         def array_literal(p):
             return {'type': 'array_literal', 'template': p}
+        
+        @self.pg.production('array_access :  IDENTIFIER LBRACKET expression RBRACKET ')
+        def array_access(p):
+            return {'type': 'array_access', 'template': p}
         
         @self.pg.production('element_list : expression')
         def one_element_list(p):
@@ -208,11 +232,11 @@ class MyParser:
 
 
 
-code_snippet_file = open("code_snippet_sample/sample1.hv")
-code_snippet = code_snippet_file.read()
-print(code_snippet)
-tokens = MyLexer().tokenize(code_snippet)
-# for token in tokens:
-#     print(token)
-result = MyParser().parse(tokens)
-print(result)
+# code_snippet_file = open("code_snippet_sample/sample1.hv")
+# code_snippet = code_snippet_file.read()
+# print(code_snippet)
+# tokens = MyLexer().tokenize(code_snippet)
+# # for token in tokens:
+# #     print(token)
+# result = MyParser().parse(tokens)
+# print(result)

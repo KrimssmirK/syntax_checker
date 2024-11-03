@@ -1,7 +1,7 @@
 ```
 <Program> ::= <Class>
 
-<Class> ::= "template" <Identifier> "{" <ClassBody> "}"
+<Class> ::= "template" <Identifier> "{" <CommentList> <ClassBody> "}"
 
 <ClassBody> ::= <Function> <ClassBody> | ε
 
@@ -16,6 +16,7 @@
 <StatementList> ::= <Statement> | <Statement> <StatementList>
 
 <Statement> ::= <VariableDeclaration>
+              | <VariableAssignment>
               | <FunctionCall>
               | <ControlStatement>
               | <ReturnStatement>
@@ -24,6 +25,9 @@
 
 <VariableDeclaration> ::= <Type> <Identifier> "=" <Expression> ";"
 
+<VariableAssignment> ::= <Identifier> "=" <Expression> ";"
+                       | <ArrayAccess> "=" <Expression> ";"
+
 <FunctionCall> ::= <Identifier> "(" <ArgumentList> ")" ";"
 
 <ControlStatement> ::= <LoopStatement>
@@ -31,18 +35,22 @@
 
 <ReturnStatement> ::= "finish" ";"
 
-<LoopStatement> ::= "from" <Expression> "to" <Expression> "as" <Identifier> "{" <Statement>"}"
+<LoopStatement> ::= "from" <Expression> "to" <Expression> "as" <Identifier> "{" <StatementList>"}"
 
-<ConditionStatement> ::= "check" "(" <Expression> ")" "{" <Statement> "}"
+<ConditionStatement> ::= "check" "(" <Expression> ")" "{" <StatementList> "}"
 
-<CommentList> ::= <Comment> | <Comment> <CommentList>
+             
+<CommentList> ::= <Comment> | <Comment> <CommentList> | ε
 
 <Expression> ::= <Identifier>
                | <Literal>
+               | <ArrayAccess>
                | <Expression> <Operator> <Expression>
                | <ObjectAccess>
 
 <Literal> ::= <ArrayLiteral> | <Number> | <Boolean> | <StringLiteral>
+
+<ArrayAccess> ::= <Identifier> "[" <Expression> "]"
 
 <ArrayLiteral> ::= "[" <ElementList> "]"
 

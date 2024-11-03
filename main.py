@@ -1,3 +1,5 @@
+from component.lexer import MyLexer
+from component.parser import MyParser
 from component.syntax_checker import SyntaxChecker
 
 """
@@ -10,7 +12,10 @@ arr<str> ary = ["Hello", "World"];
 int x = 1;
 """
 def main():
-	SyntaxChecker().run()
+	SyntaxChecker(
+     lexer=MyLexer(), 
+     parser=MyParser()
+    ).run()
  
 
 if __name__ == "__main__":

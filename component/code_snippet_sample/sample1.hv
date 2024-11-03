@@ -1,6 +1,6 @@
 template CodeChallenge {
 
-
+    # this is the start point of the program when this template invoked;
     fn main() {
         arr<int> numbers = [9, 8, 7, 6, 5, 4, 3, 2, 1];
         log("before:", numbers);
@@ -22,9 +22,9 @@ template CodeChallenge {
                 # traverse the array from 0 to n-i-1;
                 # swap if the element found is greater;
                 # than the next element;
-                check (numbers > arr) {
+                check (numbers[j] > arr[j+1]) {
                     swap(numbers, j, j+1);
-                    int swapped = true;
+                    swapped = true;
                 }
             }
             check (swapped == false) {
@@ -34,6 +34,8 @@ template CodeChallenge {
     }
 
     fn swap(arr<int> numbers, int i, int j) {
-        
+        int temp = numbers[i];
+        numbers[i] = numbers[j];
+        numbers[j] = temp;
     }
 }
