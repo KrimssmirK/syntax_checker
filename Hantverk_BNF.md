@@ -1,21 +1,26 @@
 ```
-<CodeChallenge> ::= "template" "CodeChallenge" "{" <Program> "}"
+<Program> ::= <Class>
 
-<Program> ::= <Function>* 
+<Class> ::= "template" <Identifier> "{" <ClassBody> "}"
 
-<Function> ::= "fn" <Identifier> "(" <ParameterList> ")" "{" <Comment>* <FunctionBody> "}"
+<ClassBody> ::= <Function> <ClassBody> | ε
 
-<ParameterList> ::= <Parameter> | <Parameter> "," <ParameterList> | ""
+<Function> ::= "fn" <Identifier> "(" <ParameterList> ")" "{" <FunctionBody> "}"
+
+<ParameterList> ::= <Parameter> | <Parameter> "," <ParameterList> | ε
 
 <Parameter> ::= <Type> <Identifier>
 
-<FunctionBody> ::= <Statement>* 
+<FunctionBody> ::= <StatementList>
+
+<StatementList> ::= <Statement> | <Statement> <StatementList>
 
 <Statement> ::= <VariableDeclaration>
               | <FunctionCall>
               | <ControlStatement>
               | <ReturnStatement>
-              | <Comment>
+              | <CommentList>
+              | ε
 
 <VariableDeclaration> ::= <Type> <Identifier> "=" <Expression> ";"
 
@@ -24,15 +29,13 @@
 <ControlStatement> ::= <LoopStatement>
                     | <ConditionStatement>
 
-<LoopStatement> ::= "from" <Expression> "to" <Expression> "as" <Identifier> "{" <Comment>* <Statement>* "}"
+<ReturnStatement> ::= "finish" ";"
 
-<ConditionStatement> ::= "check" "(" <Expression> ")" "{" <Comment>* <Statement>* "}"
+<LoopStatement> ::= "from" <Expression> "to" <Expression> "as" <Identifier> "{" <Statement>"}"
 
-<ReturnStatement> ::= "finish;"  # Keyword to exit a function
+<ConditionStatement> ::= "check" "(" <Expression> ")" "{" <Statement> "}"
 
-<ArgumentList> ::= <Expression> | <Expression> "," <ArgumentList> | ""
-
-<Type> ::= "int" | "bol" | "arr<int>"
+<CommentList> ::= <Comment> | <Comment> <CommentList>
 
 <Expression> ::= <Identifier>
                | <Literal>
@@ -43,24 +46,9 @@
 
 <ArrayLiteral> ::= "[" <ElementList> "]"
 
-<ElementList> ::= <Expression> | <Expression> "," <ElementList> | ""
-
-<Number> ::= <Digit>+
-
-<Digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-
-<Identifier> ::= <Letter> <IdentifierTail>
-
-<IdentifierTail> ::= <Letter> <IdentifierTail> | <Digit> <IdentifierTail> | ""
-
-<Letter> ::= "a" | "b" | ... | "z" | "A" | "B" | ... | "Z"
-
-<Boolean> ::= "true" | "false"
-
-<StringLiteral> ::= "\"" <StringCharacter>* "\""
-<StringCharacter> ::= <Letter> | <Digit> | <SpecialCharacter>  # Can include letters, digits, and special characters
-
-<Operator> ::= ">" | "<" | "==" | "!=" | "+" | "-" | "*" | "/"
+<ElementList> ::= <Expression> | <Expression> "," <ElementList> | ε
 
 <ObjectAccess> ::= <Identifier> "->" <Identifier> "(" <ArgumentList> ")"
+
+<ArgumentList> ::= <Expression> | <Expression> "," <ArgumentList> | ε
 ```

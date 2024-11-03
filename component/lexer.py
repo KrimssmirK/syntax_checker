@@ -1,64 +1,39 @@
 from rply import LexerGenerator
-import json5
 
 
-WHITESPACE=r"\s+"
-TOKEN_DETAIL_IDX=1
-
-
-class CustomLexerGenerator():
+class MyLexer():
     
-	def __init__(
-     self, 
-     syntax_rules={}, 
-     includeLexerPrefix=True, 
-     verbose=False
-     ):
-		if type(syntax_rules) is not dict:  raise Exception("Rules must be a dictionary")
-
+	def __init__(self):
 		self.lexer = LexerGenerator()
-		self.syntax_rules = syntax_rules
-		self.includeLexerPrefix = includeLexerPrefix
-		self.verbose = verbose
 
-		if syntax_rules:
-			self.are_rules_added = True
-			self.add_syntax_rules(syntax_rules)
-		else:
-			self.are_rules_added = False
+		# add rules
+		self.lexer.add("TEMPLATE", r"template")
+		self.lexer.add("FUNCTION", r"fn")
+		self.lexer.add("FROM", r"from")
+		self.lexer.add("TO", r"to")
+		self.lexer.add("AS", r"as")
+		self.lexer.add("CHECK", r"check")
+		self.lexer.add("FINISH", r"finish")
+		self.lexer.add("NUMBER", r"\d+")
+		self.lexer.add("BOOLEAN", r"true|false")
+		self.lexer.add("ARROW", r"->")
+		self.lexer.add("STRING", r"\".*\"")
+		self.lexer.add("TYPE", r"int|bol|arr<int>")
+		self.lexer.add("COMMENT", r"#.*;")
+		self.lexer.add("IDENTIFIER", r"[a-zA-Z0-9_][a-zA-Z0-9_]*")
+		self.lexer.add("OPERATOR", r">|<|={2}|!=|\+|-{1}|\*|/")
+		self.lexer.add("ASSIGN", r"=")
+		self.lexer.add("SEMICOLON", r";")
+		self.lexer.add("COMMA", r",")
+		self.lexer.add("LBRACKET", r"\[")
+		self.lexer.add("RBRACKET", r"\]")
+		self.lexer.add("LCBRACKET", r"\{")
+		self.lexer.add("RCBRACKET", r"\}")
+		self.lexer.add("LPARAN", r"\(")
+		self.lexer.add("RPARAN", r"\)")
+		self.lexer.ignore(r"\s+")
+		
+		self.lexer = self.lexer.build()
 
-	def add_syntax_rules(self, syntax_rules):
-		for token_name, re_pattern in syntax_rules.items():
-			try:
-				token_to_add = token_name if self.includeLexerPrefix else token_name.split("-")[TOKEN_DETAIL_IDX]
-
-				if self.verbose: print(f"Adding token {self.syntax_rules[token_name]} as {token_to_add}")
-    
-				self.lexer.add(token_to_add, re_pattern)
-			except Exception as e:
-				print(f"Error adding token {self.syntax_rules[token_name]}: {e}")
-
-		self.lexer.ignore(WHITESPACE)
-
-	def build(self):
-		if self.are_rules_added:
-			return self.lexer.build()
-		else:
-			print("no rules are setup to the Lexer Generator")
-
-
-def main():
-    # Load the rules
-	SYNTAX_RULES_PATH = "../syntax_rules/syntax_rules.jsonc"
-	with open(SYNTAX_RULES_PATH, "r") as file:
-		syntax_rules = json5.load(file)
-  
-	my_lexer_generator = CustomLexerGenerator(syntax_rules=syntax_rules)
-	my_lexer = my_lexer_generator.build()
-	_input = "# dasfds;"
-	for token in my_lexer.lex(_input):
-		print(token)
-    
-
-if __name__ == "__main__":
-    main()
+	def tokenize(self, code):
+		return self.lexer.lex(code)

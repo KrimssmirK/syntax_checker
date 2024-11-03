@@ -217,12 +217,6 @@ class TestLexerToken(unittest.TestCase):
         for token in self.lexer.lex(_input):
             self.assertEqual(token, expected)
     
-    def test_string_literal_token(self):
-        _input = "\"hello world\""
-        expected = Token("STRING_LITERAL", "\"hello world\"")
-        for token in self.lexer.lex(_input):
-            self.assertEqual(token, expected)
-    
     def test_method_access_token(self):
         _input = "->"
         expected = Token("METHOD_ACCESS", "->")

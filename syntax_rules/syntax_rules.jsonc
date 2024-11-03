@@ -1,6 +1,6 @@
 {
+	"STRING": "\"",
 	"METHOD_ACCESS": "->",
-	"STRING_LITERAL": "\".*\"",
 	"TEMPLATE": "template",
 	"FUNCTION": "fn",
 	"OPEN_PARAN": "\\(",
@@ -17,7 +17,7 @@
 	"TYPE": "int|bol|arr<int>",
 	"OPEN_BRACKET": "\\[",
 	"CLOSE_BRACKET": "\\]",
-	"NUMBER": "\\d+",
+	"DIGIT": "\\d",
 	"BOOLEAN": "true|false",
 	"LETTER": "[a-zA-Z]",
 	"OPERATOR": ">|<|={2}|!=|\\+|-{1}|\\*|/",

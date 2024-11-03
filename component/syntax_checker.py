@@ -1,5 +1,6 @@
 import json5
-from component.lexer import CustomLexerGenerator
+from component.lexer import MyLexer
+from component.parser import MyParser
 
 
 # consists of Lexer and Parser
@@ -9,29 +10,22 @@ class SyntaxChecker():
 		"""
 		Initialize the lexer and parser
 		"""
-		with open(syntax_rules_path, "r") as file:
-			syntax_rules = json5.load(file)
-			custom_lexer_generator = CustomLexerGenerator(syntax_rules=syntax_rules, includeLexerPrefix=includeLexerPrefix, verbose=verbose)
-			self.lexer = custom_lexer_generator.build()
+		self.lexer = MyLexer()
+		self.parser = MyParser()
 
 	def run(self):
 	
 		exitCommands = ["exit", "quit", "stop", "end"]
 
 		while True:
+			code_snippet = input("\n\nHantverk> ")
+			if (code_snippet.lower() in exitCommands) or (code_snippet.lower()[0] == "q"):
+				break
+			
 			try:
-				code_snippet = input("\n\nHantverk> ")
-
-				if (code_snippet.lower() in exitCommands) or (code_snippet.lower()[0] == "q"):
-					break
-				
-				# TODO change this after adding parser
-				# eg self.parser.parse(self.lexer.lex(code_snippet))
-				# -------------TEMP-----------------
-				tokens = self.lexer.lex(code_snippet)
-
-				for token in tokens:
-					print(token)
+				tokens = self.lexer.tokenize(code_snippet)
+				self.parser.parse(tokens)
+				print("SYNTAX VALID!")
      			# ----------------------------------
 			except Exception as e:
 				print("\n======= ERROR =======")
