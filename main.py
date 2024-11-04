@@ -7,7 +7,7 @@ import os
 def main():
     syntax_checker = SyntaxChecker(lexer=MyLexer(), parser=MyParser())
     
-    print(f"\n\n\033[0;37;40m{'-'*10}SYNTAX CHECK RESULT{'-'*10}")
+    print(f"\n\n\033[0;37;40m{'-'*44}SYNTAX CHECK RESULT{'-'*44}")
     
     # read sample codes
     code_folder = "codes"

@@ -22,9 +22,9 @@ class SyntaxChecker():
 				print("SYNTAX VALID!")
      			# ----------------------------------
 			except Exception as e:
-				print("\n======= ERROR =======")
+				print(f"\n{'='*50} ERROR {'='*50}")
 				print(e)
-				print("=====================\n")
+				print(f"{'='*107}\n")
     
 	def check(self, code):
 		"""_summary_
@@ -38,7 +38,7 @@ class SyntaxChecker():
 			self.parser.parse(tokens)
 			print("\033[1;32;40mSYNTAX VALID!")
 		except Exception as e:
-			print("\n\033[1;31;40m======= ERROR =======")
+			print(f"\n\033[1;31;40m{'='*50} ERROR {'='*50}")
 			print(e)
-			print("=====================\n")
+			print(f"{'='*107}\n")
         

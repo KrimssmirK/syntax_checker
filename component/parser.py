@@ -223,9 +223,9 @@ class MyParser:
         @self.pg.error
         def error_handler(token):
             if Token('IDENTIFIER', 'arr') == token:
-                raise ValueError(f"you have a problem with arr!!\nTry to check either indexing or declaring an array")
+                raise ValueError(f"Error in line {token.getsourcepos().lineno} at column {token.getsourcepos().colno}\nyou have a problem with arr!!\nTry to check either indexing or declaring an array")
             if Token('IDENTIFIER', 'fun') == token:
-                raise ValueError(f"you have a problem with declaring a function!!\nUse the keyword \"fn\" when declaring a function")
+                raise ValueError(f"Error in line {token.getsourcepos().lineno} at column {token.getsourcepos().colno}\nyou have a problem with declaring a function!!\nUse the keyword \"fn\" when declaring a function")
             raise ValueError("Ran into a %s where it wasn't expected" % token)
 
     def parse(self, tokens):
